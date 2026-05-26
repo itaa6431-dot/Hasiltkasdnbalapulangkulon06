@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pengumuman Hasil TKA SDN Balapulang Kulon 06</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background: linear-gradient(135deg,#0f172a,#1e3a8a);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      color:#fff;
+    }
+
+    .container{
+      width:100%;
+      max-width:850px;
+      background:#ffffff;
+      color:#111827;
+      border-radius:20px;
+      padding:35px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .header{
+      text-align:center;
+      margin-bottom:30px;
+    }
+
+    .header h1{
+      font-size:30px;
+      color:#1e3a8a;
+      margin-bottom:10px;
+    }
+
+    .header h2{
+      font-size:20px;
+      color:#334155;
+      margin-bottom:8px;
+    }
+
+    .header p{
+      color:#64748b;
+    }
+
+    .login-box{
+      background:#f1f5f9;
+      padding:25px;
+      border-radius:15px;
+      margin-bottom:25px;
+    }
+
+    .login-box h3{
+      margin-bottom:15px;
+      color:#1e293b;
+    }
+
+    input{
+      width:100%;
+      padding:14px;
+      border-radius:10px;
+      border:1px solid #cbd5e1;
+      font-size:16px;
+      margin-bottom:15px;
+    }
+
+    button{
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:10px;
+      background:#2563eb;
+      color:white;
+      font-size:16px;
+      cursor:pointer;
+      font-weight:bold;
+      transition:0.3s;
+    }
+
+    button:hover{
+      background:#1d4ed8;
+    }
+
+    .result{
+      display:none;
+      margin-top:20px;
+      background:#f8fafc;
+      border-radius:15px;
+      padding:25px;
+      border:2px solid #dbeafe;
+    }
+
+    .result h3{
+      color:#1d4ed8;
+      margin-bottom:20px;
+      text-align:center;
+    }
+
+    .data-item{
+      margin-bottom:12px;
+      padding-bottom:10px;
+      border-bottom:1px solid #e2e8f0;
+    }
+
+    .label{
+      font-weight:bold;
+      color:#334155;
+    }
+
+    .score{
+      font-size:18px;
+      font-weight:bold;
+      color:#0f172a;
+    }
+
+    .footer{
+      margin-top:25px;
+      text-align:center;
+      color:#64748b;
+      font-size:14px;
+    }
+
+    .error{
+      display:none;
+      margin-top:15px;
+      background:#fee2e2;
+      color:#b91c1c;
+      padding:12px;
+      border-radius:10px;
+      text-align:center;
+      font-weight:bold;
+    }
+
+    @media(max-width:600px){
+      .container{
+        padding:20px;
+      }
+
+      .header h1{
+        font-size:24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <h1>PENGUMUMAN HASIL TKA</h1>
+    <h2>SD NEGERI BALAPULANG KULON 06</h2>
+    <p>Tahun Pelajaran 2025/2026</p>
+  </div>
+
+  <div class="login-box">
+    <h3>Login Menggunakan NISN</h3>
+
+    <input type="text" id="nisn" placeholder="Masukkan NISN">
+    <button onclick="cekHasil()">Lihat Hasil</button>
+
+    <div class="error" id="error">
+      NISN tidak ditemukan!
+    </div>
+  </div>
+
+  <div class="result" id="result">
+    <h3>HASIL TES KEMAMPUAN AKADEMIK</h3>
+
+    <div class="data-item">
+      <span class="label">Nama Peserta:</span>
+      <div id="nama"></div>
+    </div>
+
+    <div class="data-item">
+      <span class="label">Nomor Peserta:</span>
+      <div id="nomor"></div>
+    </div>
+
+    <div class="data-item">
+      <span class="label">NISN:</span>
+      <div id="hasilNisn"></div>
+    </div>
+
+    <div class="data-item">
+      <span class="label">Tempat, Tanggal Lahir:</span>
+      <div id="ttl"></div>
+    </div>
+
+    <div class="data-item">
+      <span class="label">Nilai Matematika:</span>
+      <div class="score" id="mtk"></div>
+    </div>
+
+    <div class="data-item">
+      <span class="label">Nilai Bahasa Indonesia:</span>
+      <div class="score" id="indo"></div>
+    </div>
+
+    <div class="footer">
+      Kementerian Pendidikan Dasar dan Menengah<br>
+      Dinas Pendidikan dan Kebudayaan Kabupaten Tegal
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+const dataSiswa = [
+  {
+    nisn:"0133411944",
+    nama:"MUHAMMAD BAIHAQI KAIZAN",
+    nomor:"T1-26-03-35-0056-0001-8",
+    ttl:"TEGAL, 12 November 2013",
+    mtk:"36.67 (Memadai)",
+    indo:"46.67 (Kurang)"
+  },
+  {
+    nisn:"0133670988",
+    nama:"ATHIRAH KALISTA ZALFA",
+    nomor:"T1-26-03-35-0056-0002-7",
+    ttl:"AMBON, 28 Mei 2013",
+    mtk:"46.67 (Memadai)",
+    indo:"36.67 (Kurang)"
+  },
+  {
+    nisn:"0127905020",
+    nama:"MUHAMMAD DAFFA AQIL AL FARIZI",
+    nomor:"T1-26-03-35-0056-0003-6",
+    ttl:"TEGAL, 11 Februari 2012",
+    mtk:"33.33 (Memadai)",
+    indo:"53.33 (Memadai)"
+  },
+  {
+    nisn:"0146268074",
+    nama:"AKIFA NAILA APRILIANI",
+    nomor:"T1-26-03-35-0056-0004-5",
+    ttl:"TEGAL, 14 April 2014",
+    mtk:"50.00 (Memadai)",
+    indo:"93.33 (Baik)"
+  },
+  {
+    nisn:"0136597887",
+    nama:"FRIDA RAHAYU",
+    nomor:"T1-26-03-35-0056-0005-4",
+    ttl:"TEGAL, 18 Oktober 2013",
+    mtk:"60.00 (Baik)",
+    indo:"80.00 (Baik)"
+  },
+  {
+    nisn:"0146436192",
+    nama:"ADELIA FAIQ SA'DIYAH",
+    nomor:"T1-26-03-35-0056-0006-3",
+    ttl:"TEGAL, 21 Juni 2014",
+    mtk:"43.33 (Memadai)",
+    indo:"83.33 (Baik)"
+  },
+  {
+    nisn:"0139180200",
+    nama:"AZZIRAH AULIA SAFITRI",
+    nomor:"T1-26-03-35-0056-0007-2",
+    ttl:"TEGAL, 29 Agustus 2013",
+    mtk:"53.33 (Memadai)",
+    indo:"66.67 (Memadai)"
+  },
+  {
+    nisn:"0134969755",
+    nama:"MUHAMMAD FATIH IZZUDIN NUGROHO",
+    nomor:"T1-26-03-35-0056-0008-9",
+    ttl:"TEGAL, 11 November 2013",
+    mtk:"36.67 (Memadai)",
+    indo:"46.67 (Kurang)"
+  },
+  {
+    nisn:"0145624670",
+    nama:"AHMAD FAISAL ARIF AZMI",
+    nomor:"T1-26-03-35-0056-0009-8",
+    ttl:"TEGAL, 16 Maret 2014",
+    mtk:"40.00 (Memadai)",
+    indo:"53.33 (Memadai)"
+  },
+  {
+    nisn:"3146290227",
+    nama:"MONICA MAULIDA",
+    nomor:"T1-26-03-35-0056-0010-7",
+    ttl:"TEGAL, 3 Januari 2014",
+    mtk:"53.33 (Memadai)",
+    indo:"76.67 (Baik)"
+  },
+  {
+    nisn:"0134946208",
+    nama:"NUR CHOTIMATUL ALIYAH",
+    nomor:"T1-26-03-35-0056-0011-6",
+    ttl:"TEGAL, 31 Maret 2013",
+    mtk:"50.00 (Memadai)",
+    indo:"86.67 (Baik)"
+  },
+  {
+    nisn:"3137634634",
+    nama:"SALWA DILA AYATUL HUSNA",
+    nomor:"T1-26-03-35-0056-0012-5",
+    ttl:"TEGAL, 14 Mei 2013",
+    mtk:"30.00 (Kurang)",
+    indo:"76.67 (Baik)"
+  },
+  {
+    nisn:"0134181356",
+    nama:"ASSYFA PUTRI AYUNI",
+    nomor:"T1-26-03-35-0056-0013-4",
+    ttl:"TEGAL, 31 Oktober 2013",
+    mtk:"26.67 (Kurang)",
+    indo:"43.33 (Kurang)"
+  },
+  {
+    nisn:"0135644161",
+    nama:"SABRINA AZZAHRA RAMADINA",
+    nomor:"T1-26-03-35-0056-0014-3",
+    ttl:"TEGAL, 25 Juli 2013",
+    mtk:"40.00 (Memadai)",
+    indo:"70.00 (Memadai)"
+  }
+];
+
+function cekHasil(){
+
+  const nisnInput = document.getElementById("nisn").value.trim();
+  const siswa = dataSiswa.find(s => s.nisn === nisnInput);
+
+  const result = document.getElementById("result");
+  const error = document.getElementById("error");
+
+  if(siswa){
+
+    error.style.display = "none";
+    result.style.display = "block";
+
+    document.getElementById("nama").innerText = siswa.nama;
+    document.getElementById("nomor").innerText = siswa.nomor;
+    document.getElementById("hasilNisn").innerText = siswa.nisn;
+    document.getElementById("ttl").innerText = siswa.ttl;
+    document.getElementById("mtk").innerText = siswa.mtk;
+    document.getElementById("indo").innerText = siswa.indo;
+
+  } else {
+
+    result.style.display = "none";
+    error.style.display = "block";
+
+  }
+}
+
+</script>
+
+</body>
+</html>
